@@ -246,10 +246,31 @@ let app;
         {
             e.preventDefault();
             e.stopPropagation();
+
+            //Creates a new li tag and inserts it between the contact us and login/logout links with the text content set to
+            //whatever was entered by the user before clicking submit
+            //Assigns the content of the username textbox to the userName variable
+            let userName = $("#contactName").val();
+            //Creates a new li tag
+            let li = document.createElement("li");
+            //Assigns the new li tag an id of userName
+            li.setAttribute("id", "userName");
+            //Assigns the new li tag a class of nav-text
+            li.setAttribute("class", "navbar-text");
+            //Assigns the username entered by the user to the text area of the li tag
+            li.textContent = userName;
+            //Assigns the navbar tag to the links variable
+            let links = document.getElementById("nav-links");
+            //Inserts the username entered by the user between the contact us and login/logout links
+            links.insertBefore(li, links.lastElementChild);
+
             $("#loginForm")[0].reset();
             $("#login").hide();
             $("#logout").show();
 
+            
+            //
+            //let li = document.createElement("li");            
         });
 
     }
@@ -257,6 +278,21 @@ let app;
     function DisplayRegisterContent()
     {
         document.title = "WEBD6201 - Register";
+
+        //create a new div element to be used for error messages
+        let div = document.createElement("div");
+        //Assign the new div elementand id of errorMessage
+        div.setAttribute("id", "errorMessage");
+        //assign the new div element a class of alert alert-danger
+        div.setAttribute("class", "alert alert-danger");
+        //Assign the registration page form to a variable calle registerForm
+        let registerForm = document.getElementById("registerForm");
+        //Get each of the div tags with a class name of form-group in an array
+        let formDivs = document.getElementsByClassName("form-group");
+        //Inserts the new div element before the first div element in the form
+        registerForm.insertBefore(div, formDivs[0]);
+        //Hides the newly added div element on the register page
+        $("#errorMessage").hide();
     }
 
     /**
