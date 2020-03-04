@@ -279,6 +279,22 @@ let app;
     {
         document.title = "WEBD6201 - Register";
 
+        function validateInput(selector, condition, errorMessage)
+        {
+            if(condition)
+            {
+                $("#errorMessage").show();
+                $("#errorMessage").text(errorMessage);
+                $(selector).select();
+                $(selector).css("border", "2px solid red");
+            }
+            else
+            {
+                $("#errorMessage").hide();
+                $(selector).css("border", "1px solid #ced4da");
+            }
+        }
+
         //create a new div element to be used for error messages
         let div = document.createElement("div");
         //Assign the new div elementand id of errorMessage
@@ -293,6 +309,17 @@ let app;
         registerForm.insertBefore(div, formDivs[0]);
         //Hides the newly added div element on the register page
         $("#errorMessage").hide();
+
+        //Checks that the first name is at least 2 characters in length when the user attemptsto move off of the text box
+        $("#FirstName").blur((e)=>
+        {
+            validateInput("#FirstName",( $("#FirstName").val().length < 2),"First Name is Too Short");
+        });
+
+        $("#lastName").blur((e)=>
+        {
+            validateInput("#lastName",( $("#lastName").val().length < 2),"Last Name is Too Short");
+        });
     }
 
     /**
