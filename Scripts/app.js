@@ -9,7 +9,17 @@ class Contact
     }
 }
 
-
+class User
+{
+    constructor(FirstName = "", lastName = "", emailAddress = "", password = "", confirmPassword = "")
+    {
+        this.FirstName = FirstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+    }
+}
 
 
 "use strict";
@@ -22,6 +32,8 @@ let app;
     // Declare Function Variables here...
     console.log("%cDeclaring Variables", "color: red;")
     let contactObject = new Contact();
+    //Create a new user object
+    let userObject = new User();
 
     /**
      * Variable initialization in this function
@@ -279,6 +291,15 @@ let app;
     {
         document.title = "WEBD6201 - Register";
 
+        //Function for clearing the form
+        function clearForm()
+        {
+            //document.getElementById("contactForm").reset();
+            $("#registerForm")[0].reset();
+            $("#errorMessage").hide();
+        }
+
+        //Function for validating field inputs
         function validateInput(selector, condition, errorMessage)
         {
             if(condition)
@@ -310,41 +331,68 @@ let app;
         //Hides the newly added div element on the register page
         $("#errorMessage").hide();
 
-        //Checks that the first name is at least 2 characters in length when the user attempts to move off of the text box
+        //When focus is removed from the first name field
         $("#FirstName").blur((e)=>
         {
+            //Checks that the first name is at least 2 characters in length when the user attempts to move off of the text box
             validateInput("#FirstName",( $("#FirstName").val().length < 2),"First Name must be at least 2 characters");
         });
 
-        //Checks that the last name is at least 2 characters in length when the user attempts to move off the text box
+        //When focus is removed from the last name field
         $("#lastName").blur((e)=>
         {
+            //Checks that the last name is at least 2 characters in length when the user attempts to move off the text box
             validateInput("#lastName",( $("#lastName").val().length < 2),"Last Name must be at least 2 characters");
         });
 
-        //Checks that the email address entered by the user is at least 8 characters in lenght and contains an @ symbol
+        //When focus is removed from the emailAddress field
         $("#emailAddress").blur((e)=>
         {
+            //Checks that the email address entered by the user is at least 8 characters in lenght and contains an @ symbol
             validateInput("#emailAddress",($("#emailAddress").val().length < 8) || (!$("#emailAddress").val().includes("@")),"Invalid Email Address");
         });
 
-        //
+        //When focus is removed from the password field
         $("#password").blur((e)=>
         {
+            //Checks that the password is at least 6 characters
             validateInput("#password", ($("#password").val().length < 6), "Password must be at least 6 characters");
         });
 
-        //
+        //When focus is removed from the confirm password field
         $("#confirmPassword").blur((e)=>
         {
+            //Checks that the confirm password is at least 6 characters
             validateInput("#confirmPassword", ($("#confirmPassword").val().length < 6), "Password must be at least 6 characters");
         });
 
-        //
+        //When the form is submitted
         $("#registerForm").submit((e)=>
         {
+            //Prevents default behaviour when the form is submitted
             e.preventDefault();
+            //Checks that the password and confirm password match
             validateInput("#confirmPassword", ($("#confirmPassword").val() != $("#password").val()), "Passwords must match");
+
+            //
+            if($("#errorMessage").val() == "")
+            {
+                let FirstName = $("#FirstName").val();
+                let lastName = $("#lastName").val();
+                let emailAddress = $("#emailAddress").val();
+                let password = $("#password").val();
+                let confirmPassword = $("#confirmPassword").val();
+
+                userObject.FirstName = FirstName;
+                userObject.lastName = lastName;
+                userObject.emailAddress = emailAddress;
+                userObject.password = password;
+                userObject.confirmPassword = confirmPassword;
+
+                console.log(userObject);
+
+                clearForm();
+            }
         });
     }
 
