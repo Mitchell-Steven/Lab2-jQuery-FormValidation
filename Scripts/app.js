@@ -310,15 +310,41 @@ let app;
         //Hides the newly added div element on the register page
         $("#errorMessage").hide();
 
-        //Checks that the first name is at least 2 characters in length when the user attemptsto move off of the text box
+        //Checks that the first name is at least 2 characters in length when the user attempts to move off of the text box
         $("#FirstName").blur((e)=>
         {
-            validateInput("#FirstName",( $("#FirstName").val().length < 2),"First Name is Too Short");
+            validateInput("#FirstName",( $("#FirstName").val().length < 2),"First Name must be at least 2 characters");
         });
 
+        //Checks that the last name is at least 2 characters in length when the user attempts to move off the text box
         $("#lastName").blur((e)=>
         {
-            validateInput("#lastName",( $("#lastName").val().length < 2),"Last Name is Too Short");
+            validateInput("#lastName",( $("#lastName").val().length < 2),"Last Name must be at least 2 characters");
+        });
+
+        //Checks that the email address entered by the user is at least 8 characters in lenght and contains an @ symbol
+        $("#emailAddress").blur((e)=>
+        {
+            validateInput("#emailAddress",($("#emailAddress").val().length < 8) || (!$("#emailAddress").val().includes("@")),"Invalid Email Address");
+        });
+
+        //
+        $("#password").blur((e)=>
+        {
+            validateInput("#password", ($("#password").val().length < 6), "Password must be at least 6 characters");
+        });
+
+        //
+        $("#confirmPassword").blur((e)=>
+        {
+            validateInput("#confirmPassword", ($("#confirmPassword").val().length < 6), "Password must be at least 6 characters");
+        });
+
+        //
+        $("#registerForm").submit((e)=>
+        {
+            e.preventDefault();
+            validateInput("#confirmPassword", ($("#confirmPassword").val() != $("#password").val()), "Passwords must match");
         });
     }
 
